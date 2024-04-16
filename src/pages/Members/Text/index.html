@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CriptText</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="../../../assets/css/style.css">
 </head>
 <body>
     <!-- HEADER -->
@@ -15,16 +15,19 @@
     <div class="form-container">
         <form class="form">
           <div class="form-group">
-            <label for="email">Insira o texto a ser criptografado</label>
-            <input id="email" rows="10" cols="50" name="textarea" required="">
+            <label for="textarea">Insira o texto a ser criptografado</label>
+            <textarea id="texto" rows="10" cols="50" name="textarea" required=""></textarea>
           </div>
 
+          <button id="submit-btn" class="form-submit-btn" type="submit">Criptografar</button>
           
           <div class="form-group">
             <label for="textarea">Resultado</label>
-            <textarea name="textarea" id="textarea" rows="10" cols="50" required="">          </textarea>
+            <div class="copy-container">
+              <textarea id="textopronto" rows="10" cols="50" required=""></textarea>
+              <button id="copy-btn" class="copy-btn" onclick="controlc()">&#128203;</button>
+            </div>
           </div>
-          <button class="form-submit-btn" type="submit">Enviar</button>
         </form>
       </div>
     <!-- =FIM MAIN -->
@@ -32,5 +35,7 @@
     <!-- FOOTER -->
     <div class="footer"></div>
     <!-- FIM FOOTER -->
+
+    <script src="../../../assets/js/text_cript.js"></script>
 </body>
 </html>

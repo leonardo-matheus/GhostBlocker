@@ -1,126 +1,257 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #252525;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(#212121, #212121);
+  background-image: url("../../assets/images/bg.png");
+  display: flex;
+  padding-top: 100px;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
-    color: #fff;
-    text-align: center;
-    margin-top: 20px;
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 150px;
+  height: 90vh;
+  margin: 0 20px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-container {
-    width: 400px;
-    background: linear-gradient(#212121, #212121) padding-box,
-                linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
-    border: 2px solid transparent;
-    padding: 32px 24px;
-    font-size: 14px;
-    font-family: inherit;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    box-sizing: border-box;
-    border-radius: 16px;
-  }
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 42rem;
+  background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 25px;
+  font-size: 20px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 10px;
+}
+
+.form-container button:active {
+  scale: 0.95;
+}
+
+.form-container .form {
+  display: flex;
+  flex-direction: column;;
+  gap: 1.5em;
+  padding: 1em;
+  justify-content: center;
+  width: 80%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  padding: 1em;
+  justify-content: center;
+  width: 80%;
+}
+
+.form-container .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 240px;
   
-  .form-container button:active {
-    scale: 0.95;
-  }
-  
-  .form-container .form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .form-container .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  
-  .form-container .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #717171;
-    font-weight: 600;
-    font-size: 12px;
-  }
-  
-  .form-container .form-group input {
-    width: 100%;
-    padding: 12px 16px;
-    border-radius: 8px;
-    color: #fff;
-    font-family: inherit;
-    background-color: transparent;
-    border: 1px solid #414141;
-  }
-  
-  .form-container .form-group textarea {
-    width: 100%;
-    padding: 12px 16px;
-    border-radius: 8px;
-    resize: none;
-    color: #fff;
-    height: 96px;
-    border: 1px solid #414141;
-    background-color: transparent;
-    font-family: inherit;
-  }
-  
-  .form-container .form-group input::placeholder {
-    opacity: 0.5;
-  }
-  
-  .form-container .form-group input:focus {
-    outline: none;
-    border-color: #e81cff;
-  }
-  
-  .form-container .form-group textarea:focus {
-    outline: none;
-    border-color: #e81cff;
-  }
-  
-  .form-container .form-submit-btn {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    align-self: flex-start;
-    font-family: inherit;
-    color: #717171;
-    font-weight: 600;
-    width: 40%;
-    background: #313131;
-    border: 1px solid #414141;
-    padding: 12px 16px;
-    font-size: inherit;
-    gap: 8px;
-    margin-top: 8px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
-  
-  .form-container .form-submit-btn:hover {
-    background-color: #534848;
-    border-color: #fff;
-  }
-  
-  
-  
-  
+}
+
+.form-container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #e997fa;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.form-container .form-group input {
+  width: 100%;
+  padding: 30px 35px;
+  border-radius: 8px;
+  resize: none;
+  color: #fff;
+  height: 200px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container .form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  resize: none;
+  color: #fff;
+  height: 200px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: inherit;
+  display: flex;
+}
+
+.form-container .form-group input::placeholder {
+  opacity: 0.5;
+}
+
+.form-container .form-group input:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-group textarea:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  font-family: inherit;
+  color: #717171;
+  font-weight: 600;
+  width: 90%;
+  background: #313131;
+  border: 1px solid #414141;
+  padding: 12px 16px;
+  font-size: 1.7rem;
+  gap: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  height: 3rem;
+}
+
+#form-submit-btn {
+  background-color: #e81cff;
+  border-color: #e81cff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#textbase {
+  display: flex;
+  height: 90%;
+  width: 100%;
+  align-items: start;
+  align-self: start;
+  justify-self: start;
+}
+
+.form-container .form-submit-btn:hover {
+  background-color: #a324b1f6;
+  border-color: #fff;
+  color: #fff;
+}
+
+.copy-container {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #292929; /* Exemplo de cor de fundo */
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 16px; /* Ajustar conforme necessário */
+}
+
+.copy-btn:hover {
+  background-color: #c0c0c0; /* Exemplo de cor de fundo ao passar o mouse */
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #414141; /* Para visualização do contorno */
+  display: block; /* Para evitar o espaço extra abaixo do canvas */
+  margin: 20px 0; /* Ajuste conforme necessário */
+  background-color: #fff; /* Ou outra cor de fundo se o canvas for transparente */
+}
+
+.filters button {
+  background: #313131;
+  border: 1px solid #414141;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-right: 4px; /* Para manter um espaçamento entre os botões */
+}
+
+.filters button:hover {
+  background-color: #a324b1f6;
+  border-color: #fff;
+}
+
+/* ... seu CSS existente ... */
+
+.slider-container {
+  margin: 20px 0;
+}
+
+.slider {
+  -webkit-appearance: none; /* Necessário para personalizar em WebKit */
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #e81cff;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #e81cff;
+  cursor: pointer;
+}
