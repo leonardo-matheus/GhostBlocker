@@ -3,32 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor de Imagem</title>
+    <title>GhostBlocker - Ofuscação de Imagem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../../assets/css/style.css">
 </head>
 <body>
-    <!-- HEADER -->
-    <div class="header"></div>
-    <!-- FIM HEADER -->
-    
-    <!-- MAIN -->
-    <div class="form-container">
-        <div class="form-group">
-            <label for="upload-file">Carregar imagem</label>
-            <input type="file" id="upload-file" accept="image/png, image/jpeg" required="">
-        </div>
-        
-        <canvas id="canvas"></canvas>
-        <canvas id="copy_canvas" style="display:none;"></canvas>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <span class="logo-text">GhostBlocker</span>
+            </div>
+            <nav class="nav">
+                <a href="../../../index.html" class="nav-link">Início</a>
+                <a href="../Text/index.html" class="nav-link">Texto</a>
+                <a href="#" class="nav-link active">Mídia</a>
+                <a href="../Lab/index.html" class="nav-link">Lab</a>
+            </nav>
+        </header>
 
-        
-        <button id="savebtn" class="form-submit-btn">Salvar</button>
+        <!-- Main Content -->
+        <main class="main">
+            <div class="hero-section">
+                <h1 class="hero-title">Ofuscação de Imagem</h1>
+                <p class="hero-subtitle">Use técnicas adversariais avançadas que atacam especificamente redes neurais convolucionais (CNNs). Torne sua imagem invisível para IA, mas perfeitamente visível para humanos.</p>
+            </div>
+
+            <div class="card">
+                <div class="form">
+                    <!-- Upload Section -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <label class="section-label">Imagem Original</label>
+                        </div>
+
+                        <div class="upload-area" id="upload-area">
+                            <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" hidden>
+                            <div class="upload-area-content">
+                                <div class="upload-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <p class="upload-text">Arraste sua imagem aqui ou <span class="upload-link">clique para selecionar</span></p>
+                                <p class="upload-hint">PNG, JPG ou WebP • Máx. 5.000 x 5.000px</p>
+                            </div>
+                        </div>
+
+                        <div class="preview-area" id="preview-area" style="display:none;">
+                            <div class="preview-header">
+                                <span class="preview-filename" id="preview-filename">imagem.png</span>
+                                <div class="preview-actions">
+                                    <button type="button" class="btn-copy" id="remove-btn" style="position:static; border-color: rgba(239,68,68,0.3); color: #ef4444;">
+                                        <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;">
+                                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/>
+                                        </svg>
+                                        <span>Remover</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="image-comparison">
+                                <div class="image-panel">
+                                    <div class="image-panel-label">Original</div>
+                                    <div class="image-panel-wrapper">
+                                        <canvas id="canvas-original" class="preview-canvas"></canvas>
+                                    </div>
+                                    <div class="image-info" id="original-info">Carregando...</div>
+                                </div>
+                                <div class="image-panel">
+                                    <div class="image-panel-label">Ofuscada</div>
+                                    <div class="image-panel-wrapper">
+                                        <canvas id="canvas-processed" class="preview-canvas"></canvas>
+                                    </div>
+                                    <div class="image-info" id="processed-info">Aguardando processamento...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="controls-area" style="display:none;">
+                        <div class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon" style="background: rgba(139,92,246,0.15); color: var(--accent-primary);">
+                                    <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;">
+                                        <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <label class="section-label">Configurações de Ofuscação</label>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-header">
+                                    <label class="control-label">Ruído Adversarial Estruturado</label>
+                                    <span class="control-value" id="adversarial-value">30%</span>
+                                </div>
+                                <div class="control-slider-wrapper">
+                                    <input type="range" id="adversarial-slider" class="control-slider" min="0" max="100" value="30" step="1">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="adversarial-fill" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                                <p class="control-desc">Padrões espaciais correlacionados que criam falsos gradientes nas camadas convolucionais da IA.</p>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-header">
+                                    <label class="control-label">Perturbação de Bordas</label>
+                                    <span class="control-value" id="edge-value">25%</span>
+                                </div>
+                                <div class="control-slider-wrapper">
+                                    <input type="range" id="edge-slider" class="control-slider" min="0" max="100" value="25" step="1">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="edge-fill" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                                <p class="control-desc">Detecta bordas (Sobel) e adiciona ruído adversarial específico onde a IA mais extrai features.</p>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-header">
+                                    <label class="control-label">Desacoplamento de Canais</label>
+                                    <span class="control-value" id="channel-value">20%</span>
+                                </div>
+                                <div class="control-slider-wrapper">
+                                    <input type="range" id="channel-slider" class="control-slider" min="0" max="100" value="20" step="1">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="channel-fill" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <p class="control-desc">Quebra as correlações entre canais RGB que as CNNs usam para reconhecimento de objetos.</p>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-header">
+                                    <label class="control-label">Injeção de Frequência</label>
+                                    <span class="control-value" id="frequency-value">20%</span>
+                                </div>
+                                <div class="control-slider-wrapper">
+                                    <input type="range" id="frequency-slider" class="control-slider" min="0" max="100" value="20" step="1">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="frequency-fill" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <p class="control-desc">Injeta padrões de onda em múltiplas bandas de frequência para ativar falsos positivos nas camadas da IA.</p>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-header">
+                                    <label class="control-label">Saturação Anti-Feature</label>
+                                    <span class="control-value" id="saturation-value">15%</span>
+                                </div>
+                                <div class="control-slider-wrapper">
+                                    <input type="range" id="saturation-slider" class="control-slider" min="0" max="100" value="15" step="1">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="saturation-fill" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                                <p class="control-desc">Cria texturas falsas em regiões uniformes (céu, paredes) para confundir segmentação semântica da IA.</p>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-header">
+                                    <label class="control-label">Distorção Geométrica</label>
+                                    <span class="control-value" id="distortion-value">20%</span>
+                                </div>
+                                <div class="control-slider-wrapper">
+                                    <input type="range" id="distortion-slider" class="control-slider" min="0" max="100" value="20" step="1">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="distortion-fill" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <p class="control-desc">Deslocamento sutil de pixels com ondas multi-frequência. Quebra a invariância espacial das CNNs sem afetar a percepção humana.</p>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-header">
+                                    <label class="control-label">Injeção EXIF</label>
+                                    <span class="control-value" id="exif-value">50%</span>
+                                </div>
+                                <div class="control-slider-wrapper">
+                                    <input type="range" id="exif-slider" class="control-slider" min="0" max="100" value="50" step="1">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="exif-fill" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                                <p class="control-desc">Injeta metadados EXIF falsos (câmera, modelo, data) diretamente no binário JPEG. Altera a impressão digital do arquivo para enganar análise forense de IA.</p>
+                            </div>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" class="btn-primary" id="process-btn" style="flex:1;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                                    <path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z" fill="currentColor"/>
+                                </svg>
+                                <span>Aplicar Ofuscação Anti-IA</span>
+                            </button>
+                        </div>
+
+                        <div class="form-section" id="download-section" style="display:none;">
+                            <div class="section-header">
+                                <div class="section-icon" style="background: rgba(34,197,94,0.15); color: var(--success);">
+                                    <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <label class="section-label">Imagem Ofuscada Pronta</label>
+                            </div>
+                            <button type="button" class="btn-primary" id="download-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 2px 8px rgba(34,197,94,0.2);">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="currentColor"/>
+                                </svg>
+                                <span>Baixar Imagem Ofuscada</span>
+                            </button>
+                            <button type="button" class="btn-primary" id="test-ai-btn" style="margin-top:var(--spacing-sm); background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                                </svg>
+                                <span>Testar com ChatGPT</span>
+                            </button>
+                            <p class="test-ai-hint" id="test-ai-hint" style="display:none; text-align:center; margin-top:var(--spacing-xs); font-size:0.8rem; color:var(--text-muted);">Imagem baixada! Faça upload no ChatGPT e pergunte: <strong>"O que há nesta imagem?"</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Processamento Local</h3>
+                    <p>Sua imagem nunca sai do seu navegador. Tudo é processado no lado do cliente.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Qualidade Preservada</h3>
+                    <p>Alterações são sutis e mantêm a integridade visual da imagem para olhos humanos.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Configurável</h3>
+                    <p>Ajuste a intensidade de cada técnica de ofuscação para encontrar o equilíbrio ideal.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 GhostBlocker. Desenvolvido com propósitos educacionais e de liberdade de expressão.</p>
+        </footer>
     </div>
-    <!-- FIM MAIN -->
-
-    <!-- FOOTER -->
-    <div class="footer"></div>
-    <!-- FIM FOOTER -->
 
     <script src="../../../assets/js/media_cript.js"></script>
 </body>

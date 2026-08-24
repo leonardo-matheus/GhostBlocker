@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostBlocker - Ofuscação Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ===== LANDING PAGE SPECIFIC ===== */
+        .landing-hero {
+            text-align: center;
+            padding: var(--spacing-2xl) 0 var(--spacing-xl);
+        }
+
+        .landing-hero .hero-title {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .landing-hero .hero-subtitle {
+            font-size: 1.15rem;
+            max-width: 600px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            transition: all var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .tool-card:active {
+            transform: translateY(-2px);
+        }
+
+        .tool-card-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .tool-card-icon::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: inherit;
+            opacity: 0.3;
+            filter: blur(12px);
+            z-index: -1;
+        }
+
+        .tool-card-icon.text-icon {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
+            color: var(--accent-primary);
+        }
+
+        .tool-card-icon.text-icon::after {
+            background: var(--accent-primary);
+        }
+
+        .tool-card-icon.image-icon {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.05));
+            color: var(--success);
+        }
+
+        .tool-card-icon.image-icon::after {
+            background: var(--success);
+        }
+
+        .tool-card-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .tool-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .tool-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .tool-card .tool-status {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: var(--radius-sm);
+        }
+
+        .tool-card .tool-status.active {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+
+        .tool-card .tool-status.active::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .features-section {
+            margin-top: var(--spacing-2xl);
+            text-align: center;
+        }
+
+        .features-section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 768px) {
+            .landing-hero .hero-title {
+                font-size: 2rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .tool-card {
+                padding: var(--spacing-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <span class="logo-text">GhostBlocker</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link active">Início</a>
+                <a href="pages/Members/Text/index.html" class="nav-link">Texto</a>
+                <a href="pages/Members/Media/index.html" class="nav-link">Mídia</a>
+                <a href="pages/Members/Lab/index.html" class="nav-link">Lab</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="landing-hero">
+                <h1 class="hero-title">
+                    Ofuscação<br>
+                    <span class="highlight">Inteligente &amp; Invisível</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Ferramentas projetadas para proteger seu conteúdo contra censura automatizada e algoritmos de reconhecimento de IA. Mantenha-se livre para se expressar.
+                </p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- Text Tool Card -->
+                <a href="pages/Members/Text/index.html" class="tool-card">
+                    <div class="tool-card-icon text-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h2>Ofuscação de Texto</h2>
+                    <p>Transforme seu texto usando caracteres homoglifos Unicode. Invisível para filtros, legível para humanos.</p>
+                    <span class="tool-status active">Funcional</span>
+                </a>
+
+                <!-- Image Tool Card -->
+                <a href="pages/Members/Media/index.html" class="tool-card">
+                    <div class="tool-card-icon image-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h2>Ofuscação de Imagem</h2>
+                    <p>Aplique ruído sutil, altere metadados e modifique pixels para escapar de reconhecimento de imagem por IA.</p>
+                    <span class="tool-status active">Funcional</span>
+                </a>
+            </div>
+
+            <!-- Features -->
+            <div class="features-section">
+                <h2>Por que usar o GhostBlocker?</h2>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Privacidade Primeiro</h3>
+                        <p>Todo processamento é feito localmente no seu navegador. Nada é enviado para servidores externos.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Criptografia Leve</h3>
+                        <p>Técnicas não convencionais que não dependem de algoritmos pesados, mas são eficazes contra automação.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93s-3.05 7.44-7 7.93v2.02c5.05-.5 9-4.76 9-9.95s-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7v14zm-1-9H8v2h3v3h2v-3h3v-2h-3V7h-2v3z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Anti-Censura</h3>
+                        <p>Projetado especificamente para contornar filtros de conteúdo automatizados e sistemas de moderação de IA.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 GhostBlocker. Desenvolvido com propósitos educacionais e de liberdade de expressão.</p>
+        </footer>
+    </div>
+</body>
+</html>

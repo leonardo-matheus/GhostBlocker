@@ -22,11 +22,10 @@
                 <span class="logo-text">GhostBlocker</span>
             </div>
             <nav class="nav">
+                <a href="../../../index.html" class="nav-link">Início</a>
                 <a href="#" class="nav-link active">Texto</a>
-                <a href="../Media/index.html" class="nav-link disabled">
-                    Mídia
-                    <span class="badge">Em breve</span>
-                </a>
+                <a href="../Media/index.html" class="nav-link">Mídia</a>
+                <a href="../Lab/index.html" class="nav-link">Lab</a>
             </nav>
         </header>
 
@@ -34,11 +33,87 @@
         <main class="main">
             <div class="hero-section">
                 <h1 class="hero-title">Criptografia de Texto</h1>
-                <p class="hero-subtitle">Transforme seu texto usando caracteres Unicode invisíveis. Perfeito para evitar filtros e detecção automática.</p>
+                <p class="hero-subtitle">Ofusque seu texto com 4 técnicas avançadas: homoglifos, caracteres invisíveis, largura inteira Unicode ou marcas diacríticas. Perfeito para evitar filtros de IA e censura automatizada.</p>
             </div>
 
             <div class="card">
                 <form class="form" id="encrypt-form">
+
+                    <!-- Mode Tabs -->
+                    <div class="mode-tabs">
+                        <button type="button" class="mode-tab active" data-mode="encrypt">
+                            <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;vertical-align:text-bottom;margin-right:4px;">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z" fill="currentColor"/>
+                            </svg>
+                            Ofuscar
+                        </button>
+                        <button type="button" class="mode-tab" data-mode="decrypt">
+                            <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;vertical-align:text-bottom;margin-right:4px;">
+                                <path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z" fill="currentColor"/>
+                            </svg>
+                            Decodificar
+                        </button>
+                    </div>
+
+                    <!-- Technique Selector (visible only in encrypt mode) -->
+                    <div class="technique-section">
+                        <div class="section-header" style="margin-bottom:var(--spacing-sm)">
+                            <div class="section-icon" style="background:rgba(139,92,246,0.15);color:var(--accent-primary);width:24px;height:24px;">
+                                <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;">
+                                    <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <label class="section-label" style="font-size:0.9rem;">Técnica de Ofuscação</label>
+                        </div>
+                        <div class="technique-options">
+                            <div class="technique-option">
+                                <input type="radio" name="technique" id="tech-homoglyph" value="homoglyph" checked>
+                                <label for="tech-homoglyph">
+                                    <span class="tech-dot"></span>
+                                    Homoglifos + Invisíveis
+                                </label>
+                            </div>
+                            <div class="technique-option">
+                                <input type="radio" name="technique" id="tech-zerowidth" value="zerowidth">
+                                <label for="tech-zerowidth">
+                                    <span class="tech-dot"></span>
+                                    Caracteres Invisíveis
+                                </label>
+                            </div>
+                            <div class="technique-option">
+                                <input type="radio" name="technique" id="tech-fullwidth" value="fullwidth">
+                                <label for="tech-fullwidth">
+                                    <span class="tech-dot"></span>
+                                    Largura Inteira Unicode
+                                </label>
+                            </div>
+                            <div class="technique-option">
+                                <input type="radio" name="technique" id="tech-combining" value="combining">
+                                <label for="tech-combining">
+                                    <span class="tech-dot"></span>
+                                    Marcas Diacríticas
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Intensity Slider (visible only in encrypt mode) -->
+                    <div id="intensity-section">
+                        <div class="control-group" style="padding:var(--spacing-sm) var(--spacing-md);">
+                            <div class="control-header">
+                                <label class="control-label">Intensidade</label>
+                                <span class="control-value" id="intensity-value">60%</span>
+                            </div>
+                            <div class="control-slider-wrapper">
+                                <input type="range" id="intensity-slider" class="control-slider" min="10" max="100" value="60" step="5">
+                                <div class="slider-track">
+                                    <div class="slider-fill" id="intensity-fill" style="width:60%"></div>
+                                </div>
+                            </div>
+                            <p class="control-desc" style="margin-top:4px;">Percentual de caracteres modificados. Maior intensidade = mais ofuscação.</p>
+                        </div>
+                    </div>
+
                     <!-- Input Section -->
                     <div class="form-section">
                         <div class="section-header">
@@ -47,15 +122,28 @@
                                     <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
                                 </svg>
                             </div>
-                            <label class="section-label" for="texto">Texto Original</label>
+                            <label class="section-label" for="texto"><span id="input-label-text">Texto Original</span></label>
                             <span class="char-count" id="input-count">0 caracteres</span>
                         </div>
                         <textarea
                             id="texto"
                             class="textarea"
                             placeholder="Digite ou cole seu texto aqui..."
-                            rows="6"
+                            rows="5"
                         ></textarea>
+                    </div>
+
+                    <!-- Stats Panel -->
+                    <div class="stats-panel" id="stats-panel">
+                        <div class="stats-item">
+                            Modificados: <strong id="stats-modified">0</strong>
+                        </div>
+                        <div class="stats-item">
+                            Total: <strong id="stats-original">0</strong>
+                        </div>
+                        <div class="stats-item">
+                            Cobertura: <strong id="stats-pct">0%</strong>
+                        </div>
                     </div>
 
                     <!-- Action Button -->
@@ -63,7 +151,7 @@
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="currentColor"/>
                         </svg>
-                        <span>Criptografar Texto</span>
+                        <span>Ofuscar Texto</span>
                     </button>
 
                     <!-- Output Section -->
@@ -74,18 +162,18 @@
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
                                 </svg>
                             </div>
-                            <label class="section-label" for="textopronto">Texto Criptografado</label>
+                            <label class="section-label" for="textopronto"><span id="output-label-text">Texto Ofuscado</span></label>
                             <span class="char-count" id="output-count">0 caracteres</span>
                         </div>
                         <div class="output-wrapper">
                             <textarea
                                 id="textopronto"
                                 class="textarea output-textarea"
-                                placeholder="O resultado aparecerá aqui..."
-                                rows="6"
+                                placeholder="O texto ofuscado aparecerá aqui..."
+                                rows="5"
                                 readonly
                             ></textarea>
-                            <button type="button" class="btn-copy" id="copy-btn" onclick="controlc()">
+                            <button type="button" class="btn-copy" id="copy-btn">
                                 <svg class="copy-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"/>
                                 </svg>
@@ -96,6 +184,18 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Test with AI Button -->
+                    <div class="test-ai-section" id="test-ai-section" style="display:none;">
+                        <button type="button" class="btn-test-ai" id="test-ai-btn">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                            </svg>
+                            <span>Testar com ChatGPT</span>
+                        </button>
+                        <p class="test-ai-hint">Texto copiado! Cole no ChatGPT e pergunte: <strong>"O que este texto diz?"</strong></p>
+                    </div>
+
                 </form>
             </div>
 
